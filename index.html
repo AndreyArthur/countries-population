@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Countries Population</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Countries Population</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="standard-countries">
+        <h3>Countries (<span id="countCountries"></span>)</h3>
+        <p>Total Population: <span id="totalPopulationList"></span></p>
+
+        <div class="countries">
+
+          <div class="country-single">
+            <button class="success">+</button>
+            <div class="country-image"></div>
+
+            <div>
+              <p>nome do pais</p>
+              <small>32790</small>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="selected-countries">
+        <h3>Countries (<span id="countFavorites"></span>)</h3>
+        <p>Total Population: <span id="totalPopulationFavorites"></span></p>
+
+        <div class="countries">
+
+          <div class="country-single">
+            <button class="danger">-</button>
+            <div class="country-image"></div>
+
+            <div>
+              <p>nome do pais</p>
+              <small>32790</small>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="./js/countries.js"></script>
+</body>
+</html>
