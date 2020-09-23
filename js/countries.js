@@ -46,6 +46,7 @@ async function fetchCountries() {
     }
   });
 
+  favoritesCountries = allCountries;
   render();
 }
 
@@ -59,6 +60,7 @@ function render() {
 
 function renderCountryList() {
   let countriesHTML = '<div class="countries">';
+  countCountries = allCountries.length;
 
   allCountries.forEach( country => {
     const { name, flag, id, population } = country;
@@ -89,7 +91,34 @@ function renderCountryList() {
 }
 
 function renderFavorites() {
+  let favoritesHTML = '<div class="countries">';
 
+  favoritesCountries.forEach( country => {
+    const { name, flag, id, population } = country;
+
+    const favoriteCountryHTML = `
+      <div class='country-single'>
+
+        <button id="${id}" class="danger">-</button>
+        <div style="background: url(${flag});
+        background-size: cover; 
+        background-position: center;
+        background-repeat: no-repeat" class="country-image"></div>
+
+        <div>
+          <p>${name}</p>
+          <small>${population}</small>
+        </div>
+
+      </div>
+    `;
+
+    favoritesHTML += favoriteCountryHTML;
+  })
+
+  favoritesHTML += '</div>';
+
+  tabFavorites.innerHTML = favoritesHTML;
 }
 
 function renderSummary() {
