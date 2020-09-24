@@ -27,7 +27,7 @@ function start() {
   totalPolulationFavorites = document.
     querySelector('#totalPopulationFavorites');
 
-  numberFormat = Intl.NumberFormat('pt-BR');
+  numberFormat = Intl.NumberFormat('en-US');
 
   fetchCountries(); 
 }
@@ -43,6 +43,7 @@ async function fetchCountries() {
       id: numericCode,
       name,
       population,
+      formattedPopulation: formatNumber(population),
       flag
     }
   });
@@ -63,7 +64,7 @@ function renderCountryList() {
   let countriesHTML = '<div class="countries">';
 
   allCountries.forEach( country => {
-    const { name, flag, id, population } = country;
+    const { name, flag, id, population, formattedPopulation } = country;
     
     const countryHTML = `
       <div class='country-single'>
@@ -76,7 +77,7 @@ function renderCountryList() {
 
         <div>
           <p>${name}</p>
-          <small>${population}</small>
+          <small>${formattedPopulation}</small>
         </div>
 
       </div>
@@ -94,7 +95,7 @@ function renderFavorites() {
   let favoritesHTML = '<div class="countries">';
 
   favoriteCountries.forEach( country => {
-    const { name, flag, id, population } = country;
+    const { name, flag, id, population, formattedPopulation } = country;
 
     const favoriteCountryHTML = `
       <div class='country-single'>
@@ -107,7 +108,7 @@ function renderFavorites() {
 
         <div>
           <p>${name}</p>
-          <small>${population}</small>
+          <small>${formattedPopulation}</small>
         </div>
 
       </div>
@@ -129,13 +130,13 @@ function renderSummary() {
     return acc + curr.population;
   }, 0)
 
-  totalPopulationList.textContent = totalPopulation;
+  totalPopulationList.textContent = formatNumber(totalPopulation);
 
   const totalFavorites = favoriteCountries.reduce( (acc, curr) => {
     return acc + curr.population;
   }, 0)
 
-  totalPopulationFavorites.textContent = totalFavorites;
+  totalPopulationFavorites.textContent = formatNumber(totalFavorites);
 }
 
 function handleCountryButtons() {
@@ -177,4 +178,8 @@ function removeFromFavorites(id) {
   favoriteCountries = favoriteCountries.filter( country => country.id !== id);
 
   render();
+}
+
+function formatNumber(number) {
+  return numberFormat.format(number);
 }
