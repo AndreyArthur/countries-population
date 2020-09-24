@@ -24,7 +24,8 @@ function start() {
   countFavorites = document.querySelector('#countFavorites');
 
   totalPopulationList = document.querySelector('#totalPopulationList');
-  totalPolulationFavorites = document.querySelector('#totalPopulationFavorites');
+  totalPolulationFavorites = document.
+    querySelector('#totalPopulationFavorites');
 
   numberFormat = Intl.NumberFormat('pt-BR');
 
@@ -46,6 +47,7 @@ async function fetchCountries() {
     }
   });
 
+  favoritesCountries = allCountries;
   render();
 }
 
@@ -66,7 +68,7 @@ function renderCountryList() {
     const countryHTML = `
       <div class='country-single'>
 
-        <button id="${id}" class="success">+</button>
+        <button id="${id}" class="success btn">+</button>
         <div style="background: url(${flag});
         background-size: cover; 
         background-position: center;
@@ -97,7 +99,7 @@ function renderFavorites() {
     const favoriteCountryHTML = `
       <div class='country-single'>
 
-        <button id="${id}" class="danger">-</button>
+        <button id="${id}" class="danger btn">-</button>
         <div style="background: url(${flag});
         background-size: cover; 
         background-position: center;
@@ -137,5 +139,42 @@ function renderSummary() {
 }
 
 function handleCountryButtons() {
+  const countryButtons = Array.from(tabCountries.querySelectorAll('.btn'));
+  const favoriteButtons = Array.from(tabFavorites.querySelectorAll('.btn'));
 
+  countryButtons.forEach( button => {
+    button.addEventListener('click', () => addToFavorites(button.id));
+  })
+
+  favoriteButtons.forEach( button => {
+    button.addEventListener('click', () => removeFromFavorites(button.id));
+  })
+}
+
+function addToFavorites(id) {
+  const countryToAdd = allCountries.find( country => country.id === id);
+
+  favoriteCountries = [...favoriteCountries, countryToAdd];
+
+  favoriteCountries.sort( (a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+
+  allCountries = allCountries.filter( country => country.id !== id);
+
+  render();
+}
+
+function removeFromFavorites(id) {
+  const countryToRemove = favoriteCountries.find( country => country.id === id);
+
+  allCountries = [...allCountries, countryToRemove];
+
+  allCountries.sort( (a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+
+  favoriteCountries = favoriteCountries.filter( country => country.id !== id);
+
+  render();
 }
